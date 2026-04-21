@@ -1,0 +1,73 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: "class",
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      "colors": {
+          "surface-variant": "#e2e2e5",
+          "tertiary": "#ad292e",
+          "inverse-primary": "#cabeff",
+          "on-primary-fixed": "#1c0062",
+          "secondary-container": "#dcddfe",
+          "on-tertiary-fixed-variant": "#8f0f1c",
+          "on-secondary-fixed": "#171a31",
+          "on-error": "#ffffff",
+          "on-secondary": "#ffffff",
+          "on-error-container": "#93000a",
+          "inverse-surface": "#141625",
+          "secondary-fixed-dim": "#c2c4e4",
+          "on-primary-container": "#fffbff",
+          "on-background": "#1a1c1e",
+          "tertiary-fixed-dim": "#ffb3af",
+          "surface-container": "#edeef1",
+          "error-container": "#ffdad6",
+          "error": "#ba1a1a",
+          "surface-bright": "#f9f9fc",
+          "secondary": "#5a5c78",
+          "surface-container-highest": "#e2e2e5",
+          "primary-fixed-dim": "#cabeff",
+          "primary-fixed": "#e6deff",
+          "on-tertiary-container": "#fffbff",
+          "surface-dim": "#d9dadd",
+          "on-tertiary-fixed": "#410005",
+          "outline": "#797586",
+          "inverse-on-surface": "#f0f0f3",
+          "background": "#F8F8FB",
+          "on-surface-variant": "#484555",
+          "primary": "#7C5DFA",
+          "on-surface": "#1a1c1e",
+          "surface-tint": "#613ede",
+          "on-primary": "#ffffff",
+          "surface": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "surface-container-low": "#f3f3f6",
+          "surface-container-high": "#e8e8eb",
+          "on-tertiary": "#ffffff",
+          "tertiary-container": "#cf4244",
+          "on-secondary-fixed-variant": "#42455f",
+          "primary-container": "#9277FF",
+          "outline-variant": "#c9c4d7",
+          "tertiary-fixed": "#ffdad7",
+          "on-primary-fixed-variant": "#481bc6",
+          "secondary-fixed": "#dfe0ff",
+          "on-secondary-container": "#5e617c"
+      },
+      "fontFamily": {
+          "sans": ["League Spartan", "sans-serif"],
+          "headline": ["League Spartan", "sans-serif"],
+          "body": ["League Spartan", "sans-serif"],
+          "label": ["League Spartan", "sans-serif"]
+      },
+      "fontWeight": {
+          "bold": "500",
+          "extrabold": "600",
+          "black": "700"
+      }
+    },
+  },
+  plugins: [],
+}
