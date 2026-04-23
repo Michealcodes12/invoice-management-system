@@ -1,6 +1,7 @@
 import React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useInvoices } from '../context/InvoiceContext';
+import ProfileImage from "../assets/profile.png"
 
 export default function Sidebar() {
   const { darkMode, setDarkMode } = useInvoices();
@@ -21,7 +22,7 @@ export default function Sidebar() {
         </button>
         <div className="h-full lg:h-auto lg:w-full border-l lg:border-l-0 lg:border-t border-[#494E6E] pl-6 lg:pl-0 lg:pt-6 flex items-center justify-center">
           <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-surface-container overflow-hidden ring-2 ring-transparent hover:ring-primary transition-all cursor-pointer">
-            <img src="https://i.pravatar.cc/150?img=68" alt="User avatar" className="w-full h-full object-cover" />
+            <img src={ProfileImage} alt="User avatar" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>
