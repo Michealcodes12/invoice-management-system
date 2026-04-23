@@ -6,23 +6,8 @@ import { ChevronRight, Plus, ChevronLeft, Trash2 } from 'lucide-react';
 import emptyIllustration from './assets/Email campaign_Flatline.svg';
 import Button from './components/Button';
 
-const StatusBadge = ({ status }) => {
-  let colors = '';
-  switch (status.toLowerCase()) {
-    case 'paid': colors = 'bg-[#33D69F]/10 text-[#33D69F]'; break;
-    case 'pending': colors = 'bg-[#FF8F00]/10 text-[#FF8F00]'; break;
-    case 'draft': colors = 'bg-slate-400/10 text-slate-500 dark:bg-slate-300/10 dark:text-[#DFE3FA]'; break;
-    case 'overdue': colors = 'bg-tertiary/10 text-tertiary'; break;
-    default: colors = 'bg-gray-500/10 text-gray-500';
-  }
-
-  return (
-    <div className={`flex items-center justify-center gap-2 px-6 py-3 rounded-lg min-w-[104px] ${colors}`}>
-      <div className="w-2 h-2 rounded-full bg-current shadow-[0_0_3px_currentColor]"></div>
-      <span className="text-xs font-bold leading-none">{status}</span>
-    </div>
-  );
-};
+import InvoiceDetail from './components/InvoiceDetail';
+import StatusBadge from './components/StatusBadge';
 
 export default function App() {
   const { invoices, deleteInvoice, markAsPaid } = useInvoices();
@@ -31,7 +16,6 @@ export default function App() {
   const [formOpen, setFormOpen] = useState(false);
   const [editingInvoice, setEditingInvoice] = useState(null);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const filteredInvoices = invoices.filter(inv => filter === 'All' || inv.status === filter);
 
@@ -126,162 +110,22 @@ export default function App() {
             )}
           </div>
         ) : (
-          /* Detail View */
-          <div className="w-full max-w-4xl py-10 px-6 md:px-12 animate-in fade-in slide-in-from-bottom-4 duration-300">
-            <button
-              onClick={handleBack}
-              className="flex items-center gap-6 font-bold text-slate-900 dark:text-white hover:text-[#888EB0] transition-colors mb-8"
-            >
-              <ChevronLeft className="text-primary" />
-              Go back
-            </button>
-
-            <div className="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl p-6 md:p-8 flex flex-wrap items-center justify-between shadow-sm border border-transparent dark:border-white/5 mb-6">
-              <div className="flex items-center w-full justify-between sm:w-auto sm:justify-start gap-4">
-                <span className="text-[#888EB0] text-sm">Status</span>
-                <StatusBadge status={selectedInvoice.status} />
-              </div>
-              <div className="hidden sm:flex items-center gap-2">
-                <Button variant="edit" onClick={() => openForm(selectedInvoice)}>
-                  Edit
-                </Button>
-                <Button variant="danger" onClick={() => setIsDeleteModalOpen(true)}>
-                  Delete
-                </Button>
-                {selectedInvoice.status === 'Pending' && (
-                  <Button
-                    variant="primary"
-                    onClick={() => { markAsPaid(selectedInvoice.id); setSelectedInvoice({ ...selectedInvoice, status: 'Paid' }); }}
-                  >
-                    Mark as Paid
-                  </Button>
-                )}
-              </div>
-            </div>
-
-            <div className="bg-surface-container-lowest dark:bg-inverse-surface rounded-xl p-8 md:p-12 shadow-sm border border-transparent dark:border-white/5">
-              <div className="flex flex-col md:flex-row md:justify-between items-start gap-8 mb-12">
-                <div>
-                  <h2 className="text-lg font-bold dark:text-white mb-2"><span className="text-[#888EB0]">#</span>{selectedInvoice.id}</h2>
-                  <p className="text-[#888EB0] text-sm">{selectedInvoice.projectDescription}</p>
-                </div>
-                <div className="text-[#888EB0] text-sm md:text-right flex flex-col gap-1">
-                  <p>{selectedInvoice.senderAddress?.street}</p>
-                  <p>{selectedInvoice.senderAddress?.city}</p>
-                  <p>{selectedInvoice.senderAddress?.postCode}</p>
-                  <p>{selectedInvoice.senderAddress?.country}</p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-8 md:gap-24 mb-12">
-                <div className="flex flex-col gap-8">
-                  <div>
-                    <h3 className="text-[#888EB0] text-sm mb-3">Invoice Date</h3>
-                    <p className="font-bold text-lg dark:text-white">{selectedInvoice.invoiceDate ? new Date(selectedInvoice.invoiceDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</p>
-                  </div>
-                  <div>
-                    <h3 className="text-[#888EB0] text-sm mb-3">Payment Due</h3>
-                    <p className="font-bold text-lg dark:text-white">{selectedInvoice.dueDate}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-[#888EB0] text-sm mb-3">Bill To</h3>
-                  <p className="font-bold text-lg dark:text-white mb-2">{selectedInvoice.name}</p>
-                  <div className="text-[#888EB0] text-sm flex flex-col gap-1">
-                    <p>{selectedInvoice.clientAddress?.street}</p>
-                    <p>{selectedInvoice.clientAddress?.city}</p>
-                    <p>{selectedInvoice.clientAddress?.postCode}</p>
-                    <p>{selectedInvoice.clientAddress?.country}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-[#888EB0] text-sm mb-3">Sent to</h3>
-                  <p className="font-bold text-lg dark:text-white">{selectedInvoice.email}</p>
-                </div>
-              </div>
-
-              <div className="bg-surface-container-low dark:bg-[#373B53]/20 rounded-t-xl p-6 md:p-8">
-                <div className="hidden md:grid grid-cols-5 text-[#888EB0] text-sm mb-6">
-                  <div className="col-span-2">Item Name</div>
-                  <div className="text-center">QTY.</div>
-                  <div className="text-right">Price</div>
-                  <div className="text-right">Total</div>
-                </div>
-
-                <div className="flex flex-col gap-6">
-                  {selectedInvoice.items && selectedInvoice.items.length > 0 ? selectedInvoice.items.map((item, idx) => (
-                    <div key={idx} className="flex flex-col md:grid md:grid-cols-5 items-center dark:text-white font-bold">
-                      <div className="col-span-2 w-full md:w-auto mb-2 md:mb-0">
-                        {item.name}
-                        <div className="text-[#888EB0] md:hidden">{item.qty} x £{item.price}</div>
-                      </div>
-                      <div className="text-center hidden md:block text-[#888EB0]">{item.qty}</div>
-                      <div className="text-right hidden md:block text-[#888EB0]">£ {parseFloat(item.price).toFixed(2)}</div>
-                      <div className="text-right w-full md:w-auto">£ {(parseFloat(item.qty) * parseFloat(item.price)).toFixed(2)}</div>
-                    </div>
-                  )) : (
-                    <div className="text-[#888EB0] text-center w-full">No items listed.</div>
-                  )}
-                </div>
-              </div>
-
-              <div className="bg-[#373B53] dark:bg-[#0C0E16] rounded-b-xl p-6 md:p-8 flex items-center justify-between text-white">
-                <span className="text-sm">Amount Due</span>
-                <span className="text-3xl font-black tracking-tighter">£ {selectedInvoice.amount.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</span>
-              </div>
-            </div>
-
-            {/* Mobile Footer Actions */}
-            <div className="sm:hidden flex items-center justify-center gap-2 mt-6 bg-white dark:bg-inverse-surface p-6 shadow-2xl rounded-xl">
-              <Button variant="edit" className="flex-1" onClick={() => openForm(selectedInvoice)}>
-                Edit
-              </Button>
-              <Button variant="danger" className="flex-1" onClick={() => setIsDeleteModalOpen(true)}>
-                Delete
-              </Button>
-            </div>
-            {selectedInvoice.status === 'Pending' && (
-              <div className="sm:hidden mt-2">
-                <Button
-                  variant="primary"
-                  className="w-full"
-                  onClick={() => { markAsPaid(selectedInvoice.id); setSelectedInvoice({ ...selectedInvoice, status: 'Paid' }); }}
-                >
-                  Mark as Paid
-                </Button>
-              </div>
-            )}
-          </div>
+         
+          <InvoiceDetail 
+            invoice={selectedInvoice}
+            onBack={handleBack}
+            onEdit={openForm}
+            onMarkAsPaid={() => {
+              markAsPaid(selectedInvoice.id);
+              setSelectedInvoice({ ...selectedInvoice, status: 'Paid' });
+            }}
+            onDelete={(id) => {
+              deleteInvoice(id);
+              handleBack();
+            }}
+          />
         )}
       </main>
-
-      {isDeleteModalOpen && selectedInvoice && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white dark:bg-inverse-surface rounded-xl p-8 md:p-12 max-w-[30rem] w-full shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <h2 className="text-2xl tracking-tighter font-bold text-slate-900 dark:text-white mb-4">Confirm Deletion</h2>
-            <p className="text-[#888EB0] text-sm leading-relaxed mb-6 font-medium">
-              Are you sure you want to delete invoice #{selectedInvoice.id}? This action cannot be undone.
-            </p>
-            <div className="flex justify-end gap-3 font-bold">
-              <Button variant="light" onClick={() => setIsDeleteModalOpen(false)}>
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                onClick={() => {
-                  deleteInvoice(selectedInvoice.id);
-                  setIsDeleteModalOpen(false);
-                  handleBack();
-                }}
-              >
-                Delete
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <InvoiceForm
         key={formOpen ? (editingInvoice ? editingInvoice.id : 'new') : 'closed'}
@@ -290,5 +134,5 @@ export default function App() {
         invoiceToEdit={editingInvoice}
       />
     </div>
-  );
+  )
 }
