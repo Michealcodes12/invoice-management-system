@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useInvoices } from '../context/InvoiceContext';
 import { Trash2 } from 'lucide-react';
+import Button from './Button';
 
 export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
   const { addInvoice, updateInvoice } = useInvoices();
@@ -164,42 +165,43 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                 </div>
               ))}
 
-              <button
+              <Button
                 type="button"
+                variant="light"
                 onClick={addItem}
-                className="w-full bg-[#f9fafe] dark:bg-inverse-surface/80 text-on-surface-variant dark:text-[#DFE3FA] hover:bg-[#dfe3fa] font-bold rounded-full py-4 transition-colors"
+                className="w-full"
               >
                 + Add New Item
-              </button>
+              </Button>
             </div>
 
           </form>
 
           {/* Footer Controls */}
           <div className="flex items-center justify-between mt-12 bg-white dark:bg-[#141625] sticky bottom-0 py-6 border-t border-surface-variant/40 dark:border-inverse-surface/40">
-            <button
+            <Button
               type="button"
+              variant="secondary"
               onClick={onClose}
-              className="bg-surface-container-low dark:bg-inverse-surface text-on-surface-variant hover:bg-surface-variant transition-colors dark:text-[#DFE3FA] font-bold rounded-full px-6 py-4"
             >
               Discard
-            </button>
+            </Button>
 
             <div className="flex gap-2">
-              <button
+              <Button
                 type="button"
+                variant="dark"
                 onClick={() => handleSave('Draft')}
-                className="bg-[#373B53] hover:bg-[#0C0E16] text-[#888EB0] hover:text-[#DFE3FA] font-bold rounded-full px-6 py-4 transition-colors"
               >
                 Save as Draft
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant="primary"
                 onClick={() => handleSave('Pending')}
-                className="bg-primary hover:bg-primary-container text-white font-bold rounded-full px-6 py-4 transition-colors shadow-lg shadow-primary/20"
               >
                 Save & Send
-              </button>
+              </Button>
             </div>
           </div>
         </div>

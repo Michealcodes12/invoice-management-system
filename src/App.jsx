@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import InvoiceForm from './components/InvoiceForm';
 import { ChevronRight, Plus, ChevronLeft, Trash2 } from 'lucide-react';
 import emptyIllustration from './assets/Email campaign_Flatline.svg';
+import Button from './components/Button';
 
 const StatusBadge = ({ status }) => {
   let colors = '';
@@ -80,15 +81,16 @@ export default function App() {
                     </div>
                   )}
                 </div>
-                <button
+                <Button
+                  variant="primary"
                   onClick={() => openForm()}
-                  className="bg-primary hover:bg-primary-container text-white pl-2 pr-4 py-2 rounded-full flex items-center gap-3 transition-all active:scale-95 shadow-lg shadow-primary/20"
+                  className="pl-2 pr-4 py-2 active:scale-95 gap-3"
                 >
                   <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center">
                     <Plus className="text-primary w-5 h-5 font-black" />
                   </div>
                   <span className="font-bold text-sm tracking-tight">New <span className="hidden md:inline">Invoice</span></span>
-                </button>
+                </Button>
               </div>
             </header>
 
@@ -140,25 +142,19 @@ export default function App() {
                 <StatusBadge status={selectedInvoice.status} />
               </div>
               <div className="hidden sm:flex items-center gap-2">
-                <button
-                  onClick={() => openForm(selectedInvoice)}
-                  className="bg-surface-container-low hover:bg-[#dfe3fa] dark:bg-[#373B53] dark:hover:bg-white dark:hover:text-black dark:text-[#DFE3FA] text-[#7E88C3] font-bold rounded-full px-6 py-4 transition-colors"
-                >
+                <Button variant="edit" onClick={() => openForm(selectedInvoice)}>
                   Edit
-                </button>
-                <button
-                  onClick={() => setIsDeleteModalOpen(true)}
-                  className="bg-error hover:bg-tertiary-container text-white font-bold rounded-full px-6 py-4 transition-colors"
-                >
+                </Button>
+                <Button variant="danger" onClick={() => setIsDeleteModalOpen(true)}>
                   Delete
-                </button>
+                </Button>
                 {selectedInvoice.status === 'Pending' && (
-                  <button
+                  <Button
+                    variant="primary"
                     onClick={() => { markAsPaid(selectedInvoice.id); setSelectedInvoice({ ...selectedInvoice, status: 'Paid' }); }}
-                    className="bg-primary hover:bg-primary-container text-white font-bold rounded-full px-6 py-4 transition-colors shadow-lg shadow-primary/20"
                   >
                     Mark as Paid
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
@@ -239,27 +235,22 @@ export default function App() {
 
             {/* Mobile Footer Actions */}
             <div className="sm:hidden flex items-center justify-center gap-2 mt-6 bg-white dark:bg-inverse-surface p-6 shadow-2xl rounded-xl">
-              <button
-                onClick={() => openForm(selectedInvoice)}
-                className="bg-surface-container-low dark:bg-[#373B53] dark:text-[#DFE3FA] text-[#7E88C3] font-bold rounded-full px-6 py-4 flex-1"
-              >
+              <Button variant="edit" className="flex-1" onClick={() => openForm(selectedInvoice)}>
                 Edit
-              </button>
-              <button
-                onClick={() => setIsDeleteModalOpen(true)}
-                className="bg-error text-white font-bold rounded-full px-6 py-4 flex-1"
-              >
+              </Button>
+              <Button variant="danger" className="flex-1" onClick={() => setIsDeleteModalOpen(true)}>
                 Delete
-              </button>
+              </Button>
             </div>
             {selectedInvoice.status === 'Pending' && (
               <div className="sm:hidden mt-2">
-                <button
+                <Button
+                  variant="primary"
+                  className="w-full"
                   onClick={() => { markAsPaid(selectedInvoice.id); setSelectedInvoice({ ...selectedInvoice, status: 'Paid' }); }}
-                  className="w-full bg-primary text-white font-bold rounded-full px-6 py-4 shadow-lg"
                 >
                   Mark as Paid
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -274,22 +265,19 @@ export default function App() {
               Are you sure you want to delete invoice #{selectedInvoice.id}? This action cannot be undone.
             </p>
             <div className="flex justify-end gap-3 font-bold">
-              <button
-                onClick={() => setIsDeleteModalOpen(false)}
-                className="bg-[#f9fafe] dark:bg-[#252945] hover:bg-[#dfe3fa] dark:hover:bg-white dark:hover:text-black text-[#7E88C3] dark:text-[#DFE3FA] font-bold rounded-full px-6 py-4 transition-colors"
-              >
+              <Button variant="light" onClick={() => setIsDeleteModalOpen(false)}>
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="danger"
                 onClick={() => {
                   deleteInvoice(selectedInvoice.id);
                   setIsDeleteModalOpen(false);
                   handleBack();
                 }}
-                className="bg-error hover:bg-tertiary-container text-white font-bold rounded-full px-6 py-4 transition-colors"
               >
                 Delete
-              </button>
+              </Button>
             </div>
           </div>
         </div>
