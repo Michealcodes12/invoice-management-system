@@ -1,14 +1,14 @@
 import React from 'react';
 
-export default function Button({ 
-  children, 
-  variant = 'primary', 
-  className = '', 
-  ...props 
+export default function Button({
+  children,
+  variant = 'primary',
+  className = '',
+  ...props
 }) {
   // Base styles shared across all variants
   const baseStyles = "font-bold rounded-full transition-all flex items-center justify-center gap-2";
-  
+
   let variantStyles = "";
   switch (variant) {
     case 'primary':
@@ -41,7 +41,7 @@ export default function Button({
   const paddingStyles = hasPadding ? '' : 'px-5 py-2.5';
 
   return (
-    <button 
+    <button
       className={`${baseStyles} ${variantStyles} ${paddingStyles} ${className}`.trim()}
       {...props}
     >

@@ -111,21 +111,19 @@ export default function InvoiceDetail({ invoice, onBack, onEdit, onMarkAsPaid, o
       </div>
 
       {/* Mobile Footer Actions */}
-      <div className="sm:hidden flex items-center justify-center gap-2 mt-6 bg-white dark:bg-inverse-surface p-6 shadow-2xl rounded-xl">
-        <Button variant="edit" className="flex-1" onClick={() => onEdit(invoice)}>
+      <div className="sm:hidden flex items-center justify-between w-full gap-2 mt-6 bg-white dark:bg-inverse-surface p-6 shadow-2xl rounded-xl">
+        <Button variant="edit" className="flex-1 px-2 py-3 text-xs" onClick={() => onEdit(invoice)}>
           Edit
         </Button>
-        <Button variant="danger" className="flex-1" onClick={() => setIsDeleteModalOpen(true)}>
+        <Button variant="danger" className="flex-1 px-2 py-3 text-xs" onClick={() => setIsDeleteModalOpen(true)}>
           Delete
         </Button>
-      </div>
-      {invoice.status === 'Pending' && (
-        <div className="sm:hidden mt-2">
-          <Button variant="primary" className="w-full" onClick={onMarkAsPaid}>
+        {invoice.status === 'Pending' && (
+          <Button variant="primary" className="flex-[1.5] px-2 py-3 text-xs whitespace-nowrap" onClick={onMarkAsPaid}>
             Mark as Paid
           </Button>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (

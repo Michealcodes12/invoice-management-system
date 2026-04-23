@@ -112,18 +112,26 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-[100] flex justify-start w-full transition-opacity duration-300">
-      <div className="w-full max-w-2xl bg-white dark:bg-[#141625] h-full overflow-y-auto pl-20 lg:pl-24 transition-transform duration-300 transform translate-x-0">
-        <div className="p-8 md:p-14">
+    <div className="fixed inset-0 bg-black/50 z-40 flex justify-start w-full transition-opacity duration-300">
+      <div className="w-full max-w-[714px] bg-white dark:bg-[#141625] h-full overflow-y-auto pt-[72px] md:pt-[80px] lg:pt-0 lg:pl-[103px] transition-transform duration-300 transform translate-x-0 rounded-r-2xl lg:rounded-r-3xl">
+        <div className="p-6 md:p-14 pb-32">
+          <button type="button" onClick={onClose} className="flex items-center gap-4 font-bold text-slate-900 dark:text-white hover:text-[#888EB0] transition-colors mb-6 md:hidden">
+            <span className="text-primary font-bold text-lg leading-none">{"<"}</span>
+            <span className="text-sm">Go back</span>
+          </button>
           <h2 className="text-2xl font-bold dark:text-white mb-8">
-            {invoiceToEdit ? 'Edit Invoice' : 'New Invoice'}
+            {invoiceToEdit ? (
+              <>Edit <span className="text-[#888EB0]">#</span>{invoiceToEdit.id}</>
+            ) : (
+              'New Invoice'
+            )}
           </h2>
 
           <form className="flex flex-col gap-10" onSubmit={(e) => e.preventDefault()}>
             {/* Bill From */}
             <div className="flex flex-col gap-6">
               <h3 className="text-primary font-bold text-sm tracking-wide">Bill From</h3>
-              
+
               <div className="flex flex-col gap-2">
                 <label className="text-on-surface-variant dark:text-gray-400 text-sm">Street Address</label>
                 <input
@@ -168,7 +176,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
             {/* Bill To */}
             <div className="flex flex-col gap-6">
               <h3 className="text-primary font-bold text-sm tracking-wide">Bill To</h3>
-              
+
               <div className="flex flex-col gap-2">
                 <label className="text-on-surface-variant dark:text-gray-400 text-sm">Client's Name</label>
                 <input
@@ -330,31 +338,56 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
           </form>
 
           {/* Footer Controls */}
-          <div className="flex items-center justify-between mt-12 bg-white dark:bg-[#141625] sticky bottom-0 py-6 border-t border-surface-variant/40 dark:border-inverse-surface/40">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={onClose}
-            >
-              Discard
-            </Button>
-
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="dark"
-                onClick={() => handleSave('Draft')}
-              >
-                Save as Draft
-              </Button>
-              <Button
-                type="button"
-                variant="primary"
-                onClick={() => handleSave('Pending')}
-              >
-                Save & Send
-              </Button>
-            </div>
+          <div className="flex mt-12 bg-white dark:bg-[#141625] sticky bottom-0 py-6 border-t border-surface-variant/40 dark:border-inverse-surface/40 px-4 sm:px-6 w-full shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.05)]">
+            {invoiceToEdit ? (
+              <div className="flex justify-end gap-2 w-full">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="px-6 py-2"
+                  onClick={onClose}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  variant="primary"
+                  className="px-6 py-3"
+                  onClick={() => handleSave(invoiceToEdit.status)}
+                >
+                  Save Changes
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between w-full">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="px-4 py-3 sm:px-6 text-xs sm:text-sm font-bold"
+                  onClick={onClose}
+                >
+                  Discard
+                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="dark"
+                    className="px-4 py-3 sm:px-6 text-xs sm:text-sm font-bold"
+                    onClick={() => handleSave('Draft')}
+                  >
+                    Save as Draft
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="primary"
+                    className="px-4 py-3 sm:px-6 text-xs sm:text-sm font-bold"
+                    onClick={() => handleSave('Pending')}
+                  >
+                    Save & Send
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
