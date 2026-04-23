@@ -138,7 +138,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                   type="text"
                   value={formData.senderAddress.street}
                   onChange={(e) => updateNestedField('senderAddress', 'street', e.target.value)}
-                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderStreet ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.senderStreet ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
               </div>
 
@@ -149,7 +149,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="text"
                     value={formData.senderAddress.city}
                     onChange={(e) => updateNestedField('senderAddress', 'city', e.target.value)}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderCity ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.senderCity ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
@@ -158,7 +158,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="text"
                     value={formData.senderAddress.postCode}
                     onChange={(e) => updateNestedField('senderAddress', 'postCode', e.target.value)}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderPostCode ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.senderPostCode ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
@@ -167,7 +167,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="text"
                     value={formData.senderAddress.country}
                     onChange={(e) => updateNestedField('senderAddress', 'country', e.target.value)}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderCountry ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.senderCountry ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.name ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.name ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
               </div>
 
@@ -193,7 +193,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.email ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.email ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
               </div>
 
@@ -203,7 +203,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                   type="text"
                   value={formData.clientAddress.street}
                   onChange={(e) => updateNestedField('clientAddress', 'street', e.target.value)}
-                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientStreet ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.clientStreet ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
               </div>
 
@@ -214,7 +214,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="text"
                     value={formData.clientAddress.city}
                     onChange={(e) => updateNestedField('clientAddress', 'city', e.target.value)}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientCity ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.clientCity ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
@@ -223,7 +223,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="text"
                     value={formData.clientAddress.postCode}
                     onChange={(e) => updateNestedField('clientAddress', 'postCode', e.target.value)}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientPostCode ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.clientPostCode ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
@@ -232,7 +232,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="text"
                     value={formData.clientAddress.country}
                     onChange={(e) => updateNestedField('clientAddress', 'country', e.target.value)}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientCountry ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.clientCountry ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
               </div>
@@ -247,7 +247,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                     type="date"
                     value={formData.invoiceDate}
                     onChange={(e) => setFormData({ ...formData, invoiceDate: e.target.value })}
-                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.invoiceDate ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                    className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.invoiceDate ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                   />
                 </div>
                 <div className="flex flex-col gap-2 flex-1">
@@ -255,7 +255,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                   <select
                     value={formData.paymentTerms}
                     onChange={(e) => setFormData({ ...formData, paymentTerms: e.target.value })}
-                    className="w-full bg-surface-container-low dark:bg-inverse-surface border border-transparent rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                    className="w-full bg-surface-container-low dark:bg-[#1E2139] border border-transparent rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
                   >
                     <option value="1">Net 1 Day</option>
                     <option value="7">Net 7 Days</option>
@@ -271,7 +271,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                   type="text"
                   value={formData.projectDescription}
                   onChange={(e) => setFormData({ ...formData, projectDescription: e.target.value })}
-                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.projectDescription ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors.projectDescription ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
               </div>
             </div>
@@ -288,7 +288,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                       type="text"
                       value={item.name}
                       onChange={(e) => updateItem(idx, 'name', e.target.value)}
-                      className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors[`item_${idx}_name`] ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white`}
+                      className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors[`item_${idx}_name`] ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white`}
                     />
                   </div>
                   <div className="flex flex-col w-16 gap-2">
@@ -298,7 +298,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                       min="0"
                       value={item.qty}
                       onChange={(e) => updateItem(idx, 'qty', e.target.value)}
-                      className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors[`item_${idx}_qty`] ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white px-2`}
+                      className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors[`item_${idx}_qty`] ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white px-2`}
                     />
                   </div>
                   <div className="flex flex-col w-24 gap-2">
@@ -308,7 +308,7 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
                       min="0"
                       value={item.price}
                       onChange={(e) => updateItem(idx, 'price', e.target.value)}
-                      className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors[`item_${idx}_price`] ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white px-2`}
+                      className={`w-full bg-surface-container-low dark:bg-[#1E2139] border ${errors[`item_${idx}_price`] ? 'border-error' : 'border-transparent'} rounded-md p-4 font-bold dark:text-white px-2`}
                     />
                   </div>
                   <div className="flex flex-col w-20 gap-2">
