@@ -3,6 +3,7 @@ import { useInvoices } from './context/InvoiceContext';
 import Sidebar from './components/Sidebar';
 import InvoiceForm from './components/InvoiceForm';
 import { ChevronRight, Plus, ChevronLeft, Trash2 } from 'lucide-react';
+import emptyIllustration from './assets/Email campaign_Flatline.svg';
 
 const StatusBadge = ({ status }) => {
   let colors = '';
@@ -93,7 +94,8 @@ export default function App() {
 
             {filteredInvoices.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center mt-20">
-                <h2 className="text-2xl font-bold dark:text-white mt-8 mb-4 tracking-tighter">There is nothing here</h2>
+                <img src={emptyIllustration} alt="Illustration of an empty invoice list" />
+                <h2 className="text-3xl font-extrabold dark:text-white mt-8 mb-4 tracking-tighter">There is nothing here</h2>
                 <p className="text-[#888eb0] text-sm md:w-64 leading-relaxed font-medium">Create an invoice by clicking the <span className="font-bold">New Invoice</span> button and get started</p>
               </div>
             ) : (
