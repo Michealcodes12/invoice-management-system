@@ -163,13 +163,13 @@ export default function App() {
               <div className="flex flex-col md:flex-row md:justify-between items-start gap-8 mb-12">
                 <div>
                   <h2 className="text-lg font-bold dark:text-white mb-2"><span className="text-[#888EB0]">#</span>{selectedInvoice.id}</h2>
-                  <p className="text-[#888EB0] text-sm">Graphic Design</p>
+                  <p className="text-[#888EB0] text-sm">{selectedInvoice.projectDescription}</p>
                 </div>
                 <div className="text-[#888EB0] text-sm md:text-right flex flex-col gap-1">
-                  <p>19 Union Terrace</p>
-                  <p>London</p>
-                  <p>E1 3EZ</p>
-                  <p>United Kingdom</p>
+                  <p>{selectedInvoice.senderAddress?.street}</p>
+                  <p>{selectedInvoice.senderAddress?.city}</p>
+                  <p>{selectedInvoice.senderAddress?.postCode}</p>
+                  <p>{selectedInvoice.senderAddress?.country}</p>
                 </div>
               </div>
 
@@ -177,7 +177,7 @@ export default function App() {
                 <div className="flex flex-col gap-8">
                   <div>
                     <h3 className="text-[#888EB0] text-sm mb-3">Invoice Date</h3>
-                    <p className="font-bold text-lg dark:text-white">21 Aug 2021</p>
+                    <p className="font-bold text-lg dark:text-white">{selectedInvoice.invoiceDate ? new Date(selectedInvoice.invoiceDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</p>
                   </div>
                   <div>
                     <h3 className="text-[#888EB0] text-sm mb-3">Payment Due</h3>
@@ -189,10 +189,10 @@ export default function App() {
                   <h3 className="text-[#888EB0] text-sm mb-3">Bill To</h3>
                   <p className="font-bold text-lg dark:text-white mb-2">{selectedInvoice.name}</p>
                   <div className="text-[#888EB0] text-sm flex flex-col gap-1">
-                    <p>84 Church Way</p>
-                    <p>Bradford</p>
-                    <p>BD1 9PB</p>
-                    <p>United Kingdom</p>
+                    <p>{selectedInvoice.clientAddress?.street}</p>
+                    <p>{selectedInvoice.clientAddress?.city}</p>
+                    <p>{selectedInvoice.clientAddress?.postCode}</p>
+                    <p>{selectedInvoice.clientAddress?.country}</p>
                   </div>
                 </div>
 

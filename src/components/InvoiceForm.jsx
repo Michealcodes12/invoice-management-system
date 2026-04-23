@@ -7,7 +7,16 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
   const { addInvoice, updateInvoice } = useInvoices();
 
   const [formData, setFormData] = useState(
-    invoiceToEdit || { name: '', email: '', dueDate: '', items: [] }
+    invoiceToEdit || {
+      senderAddress: { street: '', city: '', postCode: '', country: '' },
+      name: '',
+      email: '',
+      clientAddress: { street: '', city: '', postCode: '', country: '' },
+      invoiceDate: '',
+      paymentTerms: '30',
+      projectDescription: '',
+      items: []
+    }
   );
 
   const [errors, setErrors] = useState({});
@@ -16,19 +25,32 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name) newErrors.name = 'Client Name is required';
+    if (!formData.senderAddress.street) newErrors.senderStreet = 'Required';
+    if (!formData.senderAddress.city) newErrors.senderCity = 'Required';
+    if (!formData.senderAddress.postCode) newErrors.senderPostCode = 'Required';
+    if (!formData.senderAddress.country) newErrors.senderCountry = 'Required';
+
+    if (!formData.name) newErrors.name = 'Required';
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'Required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
+      newErrors.email = 'Invalid';
     }
-    if (!formData.dueDate) newErrors.dueDate = 'Due Date is required';
+
+    if (!formData.clientAddress.street) newErrors.clientStreet = 'Required';
+    if (!formData.clientAddress.city) newErrors.clientCity = 'Required';
+    if (!formData.clientAddress.postCode) newErrors.clientPostCode = 'Required';
+    if (!formData.clientAddress.country) newErrors.clientCountry = 'Required';
+
+    if (!formData.invoiceDate) newErrors.invoiceDate = 'Required';
+    if (!formData.projectDescription) newErrors.projectDescription = 'Required';
+
     if (formData.items.length === 0) newErrors.items = 'At least one item is required';
 
     formData.items.forEach((item, idx) => {
-      if (!item.name) newErrors[`item_${idx}_name`] = 'Item name required';
-      if (!item.qty || parseFloat(item.qty) <= 0) newErrors[`item_${idx}_qty`] = 'Positive quantity required';
-      if (!item.price || parseFloat(item.price) <= 0) newErrors[`item_${idx}_price`] = 'Positive price required';
+      if (!item.name) newErrors[`item_${idx}_name`] = 'Required';
+      if (!item.qty || parseFloat(item.qty) <= 0) newErrors[`item_${idx}_qty`] = 'Required';
+      if (!item.price || parseFloat(item.price) <= 0) newErrors[`item_${idx}_price`] = 'Required';
     });
 
     setErrors(newErrors);
@@ -38,8 +60,16 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
   const handleSave = (status) => {
     if (status !== 'Draft' && !validate()) return;
 
+    let dueDate = '';
+    if (formData.invoiceDate) {
+      const date = new Date(formData.invoiceDate);
+      date.setDate(date.getDate() + parseInt(formData.paymentTerms || 30));
+      dueDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
     const invoice = {
       ...formData,
+      dueDate,
       status: status
     };
 
@@ -71,6 +101,16 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
     setFormData({ ...formData, items: newItems });
   };
 
+  const updateNestedField = (section, field, value) => {
+    setFormData({
+      ...formData,
+      [section]: {
+        ...formData[section],
+        [field]: value
+      }
+    });
+  };
+
   return (
     <div className="fixed inset-0 bg-black/50 z-[100] flex justify-start w-full transition-opacity duration-300">
       <div className="w-full max-w-2xl bg-white dark:bg-[#141625] h-full overflow-y-auto pl-20 lg:pl-24 transition-transform duration-300 transform translate-x-0">
@@ -79,44 +119,156 @@ export default function InvoiceForm({ isOpen, onClose, invoiceToEdit = null }) {
             {invoiceToEdit ? 'Edit Invoice' : 'New Invoice'}
           </h2>
 
-          <form className="flex flex-col gap-6" onSubmit={(e) => e.preventDefault()}>
-            <div className="flex flex-col gap-4">
-              <h3 className="text-primary font-bold text-sm tracking-wide">Bill To</h3>
+          <form className="flex flex-col gap-10" onSubmit={(e) => e.preventDefault()}>
+            {/* Bill From */}
+            <div className="flex flex-col gap-6">
+              <h3 className="text-primary font-bold text-sm tracking-wide">Bill From</h3>
+              
               <div className="flex flex-col gap-2">
-                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Client Name</label>
+                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Street Address</label>
+                <input
+                  type="text"
+                  value={formData.senderAddress.street}
+                  onChange={(e) => updateNestedField('senderAddress', 'street', e.target.value)}
+                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderStreet ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                />
+              </div>
+
+              <div className="flex flex-wrap md:flex-nowrap gap-4">
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">City</label>
+                  <input
+                    type="text"
+                    value={formData.senderAddress.city}
+                    onChange={(e) => updateNestedField('senderAddress', 'city', e.target.value)}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderCity ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">Post Code</label>
+                  <input
+                    type="text"
+                    value={formData.senderAddress.postCode}
+                    onChange={(e) => updateNestedField('senderAddress', 'postCode', e.target.value)}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderPostCode ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">Country</label>
+                  <input
+                    type="text"
+                    value={formData.senderAddress.country}
+                    onChange={(e) => updateNestedField('senderAddress', 'country', e.target.value)}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.senderCountry ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Bill To */}
+            <div className="flex flex-col gap-6">
+              <h3 className="text-primary font-bold text-sm tracking-wide">Bill To</h3>
+              
+              <div className="flex flex-col gap-2">
+                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Client's Name</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.name ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
-                {errors.name && <span className="text-error text-xs font-bold">{errors.name}</span>}
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Client Email</label>
+                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Client's Email</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.email ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
-                {errors.email && <span className="text-error text-xs font-bold">{errors.email}</span>}
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Due Date</label>
+                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Street Address</label>
                 <input
-                  type="date"
-                  value={formData.dueDate}
-                  onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.dueDate ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  type="text"
+                  value={formData.clientAddress.street}
+                  onChange={(e) => updateNestedField('clientAddress', 'street', e.target.value)}
+                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientStreet ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
                 />
-                {errors.dueDate && <span className="text-error text-xs font-bold">{errors.dueDate}</span>}
+              </div>
+
+              <div className="flex flex-wrap md:flex-nowrap gap-4">
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">City</label>
+                  <input
+                    type="text"
+                    value={formData.clientAddress.city}
+                    onChange={(e) => updateNestedField('clientAddress', 'city', e.target.value)}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientCity ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">Post Code</label>
+                  <input
+                    type="text"
+                    value={formData.clientAddress.postCode}
+                    onChange={(e) => updateNestedField('clientAddress', 'postCode', e.target.value)}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientPostCode ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">Country</label>
+                  <input
+                    type="text"
+                    value={formData.clientAddress.country}
+                    onChange={(e) => updateNestedField('clientAddress', 'country', e.target.value)}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.clientCountry ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 mt-8">
+            {/* Invoice Details */}
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-wrap md:flex-nowrap gap-4">
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">Invoice Date</label>
+                  <input
+                    type="date"
+                    value={formData.invoiceDate}
+                    onChange={(e) => setFormData({ ...formData, invoiceDate: e.target.value })}
+                    className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.invoiceDate ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                  />
+                </div>
+                <div className="flex flex-col gap-2 flex-1">
+                  <label className="text-on-surface-variant dark:text-gray-400 text-sm">Payment Terms</label>
+                  <select
+                    value={formData.paymentTerms}
+                    onChange={(e) => setFormData({ ...formData, paymentTerms: e.target.value })}
+                    className="w-full bg-surface-container-low dark:bg-inverse-surface border border-transparent rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                  >
+                    <option value="1">Net 1 Day</option>
+                    <option value="7">Net 7 Days</option>
+                    <option value="14">Net 14 Days</option>
+                    <option value="30">Net 30 Days</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="text-on-surface-variant dark:text-gray-400 text-sm">Project Description</label>
+                <input
+                  type="text"
+                  value={formData.projectDescription}
+                  onChange={(e) => setFormData({ ...formData, projectDescription: e.target.value })}
+                  className={`w-full bg-surface-container-low dark:bg-inverse-surface border ${errors.projectDescription ? 'border-error' : 'border-transparent'} rounded-md p-4 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary`}
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4 mt-4">
               <h3 className="text-[#777F98] text-lg font-bold">Item List</h3>
               {errors.items && <span className="text-error text-xs font-bold mb-2">{errors.items}</span>}
 

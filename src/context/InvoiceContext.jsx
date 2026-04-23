@@ -4,9 +4,48 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 const InvoiceContext = createContext();
 
 const initialInvoices = [
-  { id: 'RT3080', dueDate: '19 Aug 2021', name: 'Jensen Huang', email: 'jensen@nvidia.com', amount: 1800.90, status: 'Paid', items: [] },
-  { id: 'XM9141', dueDate: '20 Sep 2021', name: 'Alex Rivera', email: 'alex@example.com', amount: 556.00, status: 'Pending', items: [] },
-  { id: 'FV2353', dueDate: '12 Oct 2021', name: 'Anita Wainwright', email: 'anita@example.com', amount: 3102.04, status: 'Draft', items: [] }
+  { 
+    id: 'RT3080', 
+    invoiceDate: '2021-08-18',
+    paymentTerms: '1',
+    dueDate: '19 Aug 2021', 
+    name: 'Jensen Huang', 
+    email: 'jensen@nvidia.com', 
+    amount: 1800.90, 
+    status: 'Paid', 
+    senderAddress: { street: '19 Union Terrace', city: 'London', postCode: 'E1 3EZ', country: 'United Kingdom' },
+    clientAddress: { street: '106 Kendell Street', city: 'Sharrington', postCode: 'NR24 5WQ', country: 'United Kingdom' },
+    projectDescription: 'Re-branding',
+    items: [{ name: 'Brand Guidelines', qty: 1, price: 1800.90 }] 
+  },
+  { 
+    id: 'XM9141', 
+    invoiceDate: '2021-08-21',
+    paymentTerms: '30',
+    dueDate: '20 Sep 2021', 
+    name: 'Alex Rivera', 
+    email: 'alex@example.com', 
+    amount: 556.00, 
+    status: 'Pending', 
+    senderAddress: { street: '19 Union Terrace', city: 'London', postCode: 'E1 3EZ', country: 'United Kingdom' },
+    clientAddress: { street: '84 Church Way', city: 'Bradford', postCode: 'BD1 9PB', country: 'United Kingdom' },
+    projectDescription: 'Graphic Design',
+    items: [{ name: 'Banner Design', qty: 1, price: 156.00 }, { name: 'Email Design', qty: 2, price: 200.00 }] 
+  },
+  { 
+    id: 'FV2353', 
+    invoiceDate: '2021-09-24',
+    paymentTerms: '14',
+    dueDate: '12 Oct 2021', 
+    name: 'Anita Wainwright', 
+    email: 'anita@example.com', 
+    amount: 3102.04, 
+    status: 'Draft', 
+    senderAddress: { street: '19 Union Terrace', city: 'London', postCode: 'E1 3EZ', country: 'United Kingdom' },
+    clientAddress: { street: '', city: '', postCode: '', country: '' },
+    projectDescription: '',
+    items: [] 
+  }
 ];
 
 export const InvoiceProvider = ({ children }) => {
